@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Canvas Project</title>
+    <title>Snell's Law</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -11,6 +11,32 @@
   </head>
 
   <body>
+    <div class="sidebar-wrapper">
+      
+      <div class='sidebar p2'>
+        <h1>Snell's Law</h1>
+        <h3 class='text-gold'>n1sin(theta1) = n2sin(theta2)</h3>
+        <p>Snell's law describes how light is refracted when passing from one medium into another.</p>
+        <p>When light passes from a medium with a lesser refractive index into one with a greater refractive index, the light is skewed toward the normal line (line perpendicular to the substance boundary). Additionally the speed of light is reduced.</p>
+        <p>Try changing the refractive index of substance 2 to see how the angle of refraction is affected:</p>
+        <span class='range-container'>
+          <input class='range' min='2.00' max='8.00' value='2.33' type='range'>
+          <h4 class='text-gold'>Refractive index: <span id='refInd'></span></h4>
+        </span>
+        
+        <span class='dflex justify-start'>
+          <h4 class='pr2 text-gold'>Speed Change:</h4>
+          <label class='switch'>
+            <input type='checkbox'>
+            <span class='slider round'></span>
+          </label>
+        </span>
+      
+        <span class='sidebar-close sidebar-toggle text-gold'>&times</span>
+      </div>
+      <div class='sidebar-open sidebar-toggle dflex'><h2>&gt;</h2></div>
+    </div>
+    
     <canvas></canvas>
 
     <script src="./index.js"></script>

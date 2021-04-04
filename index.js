@@ -1,11 +1,18 @@
+// Sidebar toggling
+const sidebar = document.querySelector('.sidebar');
+const sidebarToggle = document.querySelectorAll('.sidebar-toggle');
+sidebarToggle.forEach((el) => el.addEventListener('click', (e) => {
+  sidebar.classList.contains('sidebar-active') ? sidebar.classList.remove('sidebar-active') : sidebar.classList.add('sidebar-active');
+}));
+
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
-canvas.width = window.innerWidth - 20;
-canvas.height = window.innerHeight - 20;
+canvas.width = window.innerWidth - 5;
+canvas.height = window.innerHeight - 5;
 
 window.addEventListener('resize', (e) => {
-  canvas.width = window.innerWidth - 20;
-  canvas.height = window.innerHeight - 20;
+  canvas.width = window.innerWidth - 5;
+  canvas.height = window.innerHeight - 5;
 });
 
 let mouse = {
@@ -27,6 +34,17 @@ let REFRACTIVE_INDEX1 = 1.0,
   REFRACTIVE_INDEX2 = 2.33,
   SPEED1 = 300,
   SPEED2 = 226.0;
+
+/* ----- SHOW INITIAL REFRACTIVE INDEX BELOW SLIDER ------ */
+const refDisplay = document.querySelector('#refInd');
+refDisplay.innerHTML = REFRACTIVE_INDEX2;
+
+// Change refractive index when slider is moved 
+const slider = document.querySelector('.range');
+slider.addEventListener('input', (e) => {
+  refDisplay.innerHTML = slider.value;
+  REFRACTIVE_INDEX2 = slider.value;
+});
 
 let MAX_PARTICLES = 10;
 
@@ -55,8 +73,9 @@ function setSub(y) {
 }
 
 // Snell's law: n1sin(theta1) = n2sin(theta2)
+
 function calcNewAngle(dx, dy, sub) {
-  // Angle of incidence is calculated relative to normal line
+  // Angle of incidence (theta1) is calculated relative to normal line
   let theta1 = Math.atan(dx / dy);
   const n1 = REFRACTIVE_INDEX1,
   n2 = REFRACTIVE_INDEX2;
@@ -68,7 +87,8 @@ function calcNewAngle(dx, dy, sub) {
     theta2 = Math.asin((n2 * Math.sin(theta1)) / n1);
   }
 
-  console.log(theta1, theta2);
+  // Theta2 = angle of refraction. Return tangent of this angle to get
+  // ratio of dx / dy:
   return Math.tan(theta2);
 }
 
@@ -129,7 +149,7 @@ function updateAngle(p) {
   let newAngle = calcNewAngle(p.dx, p.dy, p.initialSubstance);
 
   // newAngle is the tangent of the angle itself. Provides ratio
-  // of dy / dx
+  // of dx / dy
   if(Math.abs(newAngle) < 1) {
     p.dx = newAngle * p.dy;
   }
